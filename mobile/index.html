@@ -555,6 +555,45 @@ html,body{overflow-x:hidden}
 /* العناوين فوق نصوصها: إلى اليمين صراحةً */
 .rows .k,.rows .v,.rows .v .rich{text-align:right}
 
+/* ── «القوّة والضعف» مرئيّةً ── */
+.qcard{--s1:#1d6b3a;--s2:#e3f4e8;--s3:#a8d8b6;--w1:#a8323a;--w2:#fdeaea;--w3:#f0b4b8;--n1:#5b5766;--n2:#f1eff4;--n3:#d6d2dd}
+.qsec{display:flex;align-items:baseline;gap:8px;font-size:19px;font-weight:800;margin:6px 0 10px;padding-top:10px;border-top:1px solid var(--rule)}
+.qsec:first-of-type{border-top:0;padding-top:0}
+.qsec span{font-size:13.5px;font-weight:600;color:var(--muted)}
+.qgrp{--c1:var(--s1);--c2:var(--s2);--c3:var(--s3);padding:12px;border-radius:18px;background:color-mix(in srgb,var(--c2) 55%,#fff);border:1.5px solid var(--c3);margin-bottom:12px}
+.qgrp[data-q="w"]{--c1:var(--w1);--c2:var(--w2);--c3:var(--w3)}
+.qgrp[data-q="n"]{--c1:var(--n1);--c2:var(--n2);--c3:var(--n3)}
+.qgrp-hd{display:flex;align-items:center;gap:10px}
+.qgrp-hd b{font-size:19px;font-weight:800;color:var(--c1);flex:1}
+.qico{width:34px;height:34px;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.qico svg{width:20px;height:20px}
+.qn{min-width:30px;height:30px;padding:0 8px;border-radius:99px;background:#fff;border:1.5px solid var(--c3);color:var(--c1);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.qlead{font-size:14.5px;font-weight:600;color:var(--muted);line-height:1.6;margin:6px 0 2px}
+.qnotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 8px;margin-top:12px}
+.qnote{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;min-height:54px;padding:12px 4px 8px;
+  background:var(--c2);color:var(--c1);font-size:15.5px;font-weight:800;line-height:1.35;border-radius:4px 4px 14px 4px;
+  box-shadow:0 1px 0 rgba(0,0,0,.05),0 5px 10px -4px rgba(0,0,0,.18);transform:rotate(var(--r,0deg))}
+.qnote::before{content:"";position:absolute;top:-6px;left:50%;width:34px;height:12px;margin-left:-17px;border-radius:2px;
+  background:color-mix(in srgb,var(--c3) 70%,#fff);opacity:.85;transform:rotate(-3deg)}
+/* سُلَّم الحروف */
+.qlvl{--c1:var(--s1);--c2:var(--s2);--c3:var(--s3);display:flex;gap:12px;align-items:stretch;padding:12px;border-radius:18px;background:color-mix(in srgb,var(--c2) 55%,#fff);border:1.5px solid var(--c3);margin-bottom:10px}
+.qlvl[data-l="5"]{--c1:#0f5130;--c2:#cdebd7;--c3:#7cc496}
+.qlvl[data-l="3"]{--c1:#7a5a12;--c2:#fbf1d6;--c3:#e6cf8f}
+.qlvl[data-l="2"]{--c1:var(--w1);--c2:var(--w2);--c3:var(--w3)}
+.qlvl[data-l="1"]{--c1:#7f1d24;--c2:#f8d7d9;--c3:#e39aa0}
+.qmeter{display:flex;flex-direction:column-reverse;gap:4px;width:12px;flex:none;padding:2px 0}
+.qmeter i{flex:1;border-radius:3px;background:color-mix(in srgb,var(--c3) 35%,#fff)}
+.qmeter i.on{background:var(--c1)}
+.qlb{flex:1;min-width:0}
+.qlb>b{display:block;font-size:18.5px;font-weight:800;color:var(--c1)}
+.qtiles{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.qtile{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:50px;height:54px;padding:0 6px;border-radius:14px;background:#fff;border:1.6px solid var(--c3);color:var(--c1)}
+.qtile b{font-size:28px;font-weight:700;line-height:1.15}
+.qtile small{font-size:10.5px;font-weight:700;line-height:1.2;white-space:nowrap}
+.qtile.wide{padding:0 12px}
+.qtile.wide small{font-size:14px}
+.qtip{margin-top:10px;font-size:14.5px;font-weight:600;line-height:1.6;color:var(--c1);padding:8px 10px;border-radius:12px;background:#fff;border:1px dashed var(--c3)}
+
 </style>
 </head>
 <body>
@@ -809,10 +848,44 @@ function pSifatBook() {
     ${shead('الصِّفاتُ الضِّدِّيَّةُ — لَها ضِدٌّ', 11)}${pairs}
     ${shead('الصِّفاتُ الَّتي لا ضِدَّ لَها', 8)}${SB.singles.map(s => `<div id="sb-${s.id}">${sifaCard(s)}</div>`).join('')}
     <div id="sb-tanbih">${card(SB.tanbih.title, boxItems(SB.tanbih), { g: 'err', c: true, src: SB.tanbih.src })}</div>
-    <div id="sb-quwwa">${card(SB.quwwa.title, rows(SB.quwwa.rows, 'halq'), { g: 'halq', src: SB.quwwa.src })}</div>
+    <div id="sb-quwwa">${window.MOBILE ? quwwaMobile() : card(SB.quwwa.title, rows(SB.quwwa.rows, 'halq'), { g: 'halq', src: SB.quwwa.src })}</div>
     <div id="sb-arad">${card(SB.aradiyya.title, `<div style="font-size:20px;margin-bottom:14px">${esc(SB.aradiyya.d)}</div><div class="flow">${SB.aradiyya.items.map(x => chip(x, 'khay')).join('')}</div>`, { g: 'khay', src: SB.aradiyya.src })}</div>
     <div id="sb-muq">${card(SB.muqaddima.title, rows(SB.muqaddima.rows, 'l1'), { src: SB.muqaddima.src })}</div>
     <div id="sb-jaz">${card(SB.jazari.title, `<div class="verses">${SB.jazari.lines.map(l => `<div><span>${esc(l[0])}</span><span>${esc(l[1])}</span></div>`).join('')}</div>`, { src: SB.jazari.src })}</div></div>`;
+}
+// نسخة الجوّال: «القوّة والضعف» مرئيّةً — الصفاتُ أوراقٌ ملوّنة، والحروفُ سُلَّمٌ من خمس درجات.
+// كلُّ كلمةٍ من نصّ الكتاب نفسِه (SB.quwwa.rows)؛ لا يُكتب هنا إلّا رسمُ الحروف ودرجةُ السُّلَّم.
+function quwwaMobile() {
+  const R = SB.quwwa.rows, txt = i => plain(R[i][1]).trim();
+  const split = t => { const k = t.indexOf(': '); return k < 0 ? ['', t] : [t.slice(0, k + 1), t.slice(k + 2)]; };
+  const items = t => t.replace(/\.$/, '').split(' · ');
+  const CH = { 'باء': 'ب', 'جيم': 'ج', 'دال': 'د', 'راء': 'ر', 'صاد': 'ص', 'ظاء': 'ظ', 'قاف': 'ق', 'ضاد': 'ض', 'همزه': 'ء', 'غين': 'غ',
+    'لام': 'ل', 'ميم': 'م', 'نون': 'ن', 'تاء': 'ت', 'خاء': 'خ', 'ذال': 'ذ', 'زاي': 'ز', 'سين': 'س', 'شين': 'ش', 'عين': 'ع', 'كاف': 'ك',
+    'واو': 'و', 'ياء': 'ي', 'فاء': 'ف', 'ثاء': 'ث', 'حاء': 'ح', 'هاء': 'ه', 'طاء': 'ط' };
+  const chOf = name => CH[norm(name).split(' ')[0].replace(/^ال/, '')];
+  const SVG = { s: '<path d="M12 19V5M5 12l7-7 7 7"/>', w: '<path d="M12 5v14M5 12l7 7 7-7"/>', n: '<path d="M5 9h14M5 15h14"/>' };
+  const icon = k => `<span class="qico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${SVG[k]}</svg></span>`;
+  const rot = i => ['-1.6deg', '1.2deg', '-.6deg', '1.8deg', '-1.2deg', '.8deg'][i % 6];
+  const grp = (i, k) => {
+    const [lead, rest] = R[i][0].includes('تُوصَفُ') ? ['', txt(i)] : split(txt(i)), its = items(rest);
+    return `<div class="qgrp" data-q="${k}"><div class="qgrp-hd">${icon(k)}<b>${esc(R[i][0])}</b><span class="qn num">${its.length}</span></div>
+      ${lead ? `<div class="qlead">${esc(lead)}</div>` : ''}<div class="qnotes">${its.map((t, j) => `<span class="qnote" style="--r:${rot(j)}">${esc(t)}</span>`).join('')}</div></div>`;
+  };
+  const tile = name => { const c = chOf(name), sub = name.includes('غَيْرُ') ? 'غَيْرُ المَدِّيَّةِ' : '';
+    return c ? `<span class="qtile"><b>${c}</b>${sub ? `<small>${sub}</small>` : ''}</span>` : `<span class="qtile wide"><small>${esc(name.replace(/^و/, ''))}</small></span>`; };
+  const meter = n => `<span class="qmeter" aria-hidden="true">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= n ? 'on' : ''}"></i>`).join('')}</span>`;
+  const lvl = (i, n) => {
+    let lead = '', its = [], note = '';
+    if (i === 3) { lead = txt(i); its = ['الطّاءُ']; }
+    else if (i === 7) { its = items(txt(i)); }
+    else { const [l, r] = split(txt(i)), [a, b] = r.split('؛ '); lead = l; its = items(a); note = b ? b.replace(/^و/, '') : ''; }
+    return `<div class="qlvl" data-l="${n}">${meter(n)}<div class="qlb"><b>${esc(R[i][0])}</b>${lead ? `<div class="qlead">${esc(lead)}</div>` : ''}
+      <div class="qtiles">${its.map(tile).join('')}</div>${note ? `<div class="qtip">${esc(note)}</div>` : ''}</div></div>`;
+  };
+  return `<div class="card qcard"><div class="ctitle"><i></i><span>${esc(SB.quwwa.title)}</span></div>
+    <div class="qsec">الصِّفاتُ</div>${grp(0, 's')}${grp(1, 'w')}${grp(2, 'n')}
+    <div class="qsec">الحُروفُ <span>مِنَ الأقْوى إلى الأضْعَفِ</span></div>${lvl(3, 5)}${lvl(4, 4)}${lvl(5, 3)}${lvl(6, 2)}${lvl(7, 1)}
+    ${srcLine(SB.quwwa.src)}</div>`;
 }
 let sifatURL = null;
 function pSifat() {
