@@ -587,7 +587,7 @@ html,body{overflow-x:hidden}
 .qlb{flex:1;min-width:0}
 .qlb>b{display:block;font-size:18.5px;font-weight:800;color:var(--c1)}
 .qtiles{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.qtile{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:50px;height:54px;padding:0 6px;border-radius:14px;background:#fff;border:1.6px solid var(--c3);color:var(--c1)}
+.qtile{font:inherit;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:50px;height:54px;padding:0 6px;border-radius:14px;background:#fff;border:1.6px solid var(--c3);color:var(--c1)}
 .qtile b{font-size:28px;font-weight:700;line-height:1.15}
 .qtile small{font-size:10.5px;font-weight:700;line-height:1.2;white-space:nowrap}
 .qtile.wide{padding:0 12px}
@@ -872,7 +872,7 @@ function quwwaMobile() {
       ${lead ? `<div class="qlead">${esc(lead)}</div>` : ''}<div class="qnotes">${its.map((t, j) => `<span class="qnote" style="--r:${rot(j)}">${esc(t)}</span>`).join('')}</div></div>`;
   };
   const tile = name => { const c = chOf(name), sub = name.includes('غَيْرُ') ? 'غَيْرُ المَدِّيَّةِ' : '';
-    return c ? `<span class="qtile"><b>${c}</b>${sub ? `<small>${sub}</small>` : ''}</span>` : `<span class="qtile wide"><small>${esc(name.replace(/^و/, ''))}</small></span>`; };
+    return c ? `<button class="qtile press" data-act="qletter" data-ch="${c}"><b>${c}</b>${sub ? `<small>${sub}</small>` : ''}</button>` : `<span class="qtile wide"><small>${esc(name.replace(/^و/, ''))}</small></span>`; };
   const meter = n => `<span class="qmeter" aria-hidden="true">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= n ? 'on' : ''}"></i>`).join('')}</span>`;
   const lvl = (i, n) => {
     let lead = '', its = [], note = '';
@@ -1022,6 +1022,15 @@ document.addEventListener('click', e => {
       a.querySelector('span').textContent = open ? 'إخْفاءُ التَّفاصيلِ' : 'مَزيدٌ مِنَ المَعْلوماتِ'; break;
     }
     case 'jump': jumpTo(page, 'sb-' + a.dataset.to); break;
+    case 'qletter': {                  // حرفٌ من سُلَّم القوّة: افتح «صفات الحرف» واختره، ثمّ انزل إلى بطاقته
+      const ch = a.dataset.ch; store.set('sifatMode', 'rh'); renderTab(tab);
+      const fr = tabEl(tab).querySelector('.page:last-child iframe.sifat');
+      if (fr) fr.addEventListener('load', () => setTimeout(() => {
+        const k = [...fr.contentDocument.querySelectorAll('.keys button')].find(b => b.textContent.trim() === ch);
+        if (k) k.click();
+      }, 200), { once: true });
+      break;
+    }
     case 'quwwa': {                    // يفتح «شرح الصفات» إن لزم ثمّ ينزل إلى القسم
       if (store.get('sifatMode', 'sh') !== 'sh') { store.set('sifatMode', 'sh'); renderTab(tab); }
       const pg = tabEl(tab).querySelector('.page:last-child');
