@@ -1,4 +1,4 @@
-const V='makharij-m-904e4b921d';
+const V='makharij-m-e41681a0ca';
 const FILES=['./','index.html','manifest.webmanifest','../icon-180.png','../icon-192.png','../icon-512.png'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('makharij-m-')&&k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
